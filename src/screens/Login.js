@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import MyButton from '../components/MyButton';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -18,11 +19,6 @@ export default class Login extends React.Component {
     console.log('Pressionou!', this.state.title);
   };
 
-  goToHome = () => {
-    this.props.navigation.navigate('Home', {screen: 'Home'});
-    console.warn('Pressionei');
-  };
-
   render() {
     return (
       <View style={styles.mainView}>
@@ -33,12 +29,7 @@ export default class Login extends React.Component {
           <View style={styles.textInputView}>
             <TextInput style={styles.textInput} keyboardType="email-address" placeholder={'EMAIL'} />
             <TextInput style={styles.textInput} placeholder={'PASSWORD'} />
-            <TouchableOpacity style={styles.button} onPress={() => this.backgroundChange()}>
-              <Text style={styles.buttonText}>{`LOGIN`}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => this.goToHome()}>
-              <Text style={styles.buttonText}>{`GO TO HOME`}</Text>
-            </TouchableOpacity>
+            <MyButton title="Login" screen="Home" navigation={this.props.navigation}/>
           </View>
         </ImageBackground>
       </View>
