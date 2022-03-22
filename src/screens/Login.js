@@ -1,50 +1,43 @@
 import * as React from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 export default class Login extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       background: require('../assets/images/loginBackground.jpg'),
-      title: 'Beijo no neném' 
-    }
+      title: 'Beijo no neném',
+    };
   }
 
   backgroundChange = () => {
     this.setState({
       background: require('../assets/images/ballonImage.jpg'),
-      title: 'Sentada com balões'
-    })
-    console.log("Pressionou!", this.state.title)
-  }
+      title: 'Sentada com balões',
+    });
+    console.log('Pressionou!', this.state.title);
+  };
+
+  goToHome = () => {
+    this.props.navigation.navigate('Home', {screen: 'Home'});
+    console.warn('Pressionei');
+  };
 
   render() {
     return (
       <View style={styles.mainView}>
-        <ImageBackground
-          source={this.state.background}
-          resizeMode="cover"
-          style={styles.imageBackground}
-        >
+        <ImageBackground style={styles.imageBackground} source={this.state.background} resizeMode="cover">
           <View style={styles.titleView}>
             <Text style={styles.titleText}>{`${this.state.title}`}</Text>
           </View>
           <View style={styles.textInputView}>
-            <TextInput
-              style={styles.textInput}
-              keyboardType="email-address"
-              placeholder={'EMAIL'}
-            />
+            <TextInput style={styles.textInput} keyboardType="email-address" placeholder={'EMAIL'} />
             <TextInput style={styles.textInput} placeholder={'PASSWORD'} />
             <TouchableOpacity style={styles.button} onPress={() => this.backgroundChange()}>
               <Text style={styles.buttonText}>{`LOGIN`}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => this.goToHome()}>
+              <Text style={styles.buttonText}>{`GO TO HOME`}</Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -71,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     color: 'white',
     fontWeight: 'bold',
-    backgroundColor: 'rgba(0,0,0,0.4)'
+    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   textInputView: {
     flex: 2,
@@ -92,6 +85,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: '600'
-  }
+    fontWeight: '600',
+  },
 });
