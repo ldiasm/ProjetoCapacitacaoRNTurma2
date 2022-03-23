@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Dimensions, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import MyButton from '../components/MyButton';
 
+const screenSizeHeight = Dimensions.get('window').height
+const screenSizeWidth = Dimensions.get('window').width
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ export default class Login extends React.Component {
           <View style={styles.textInputView}>
             <TextInput style={styles.textInput} keyboardType="email-address" placeholder={'EMAIL'} />
             <TextInput style={styles.textInput} placeholder={'PASSWORD'} />
-            <MyButton title="Login" screen="Home" navigation={this.props.navigation}/>
+            <MyButton title="Login" screen="Home" navigation={this.props.navigation} />
           </View>
         </ImageBackground>
       </View>
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   imageBackground: {
-    height: '100%',
+    height: screenSizeHeight,
     padding: 32,
   },
   titleView: {
