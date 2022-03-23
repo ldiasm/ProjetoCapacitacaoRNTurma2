@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FlatList, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ImageBackground, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MyButton from '../components/MyButton';
 
 const DATA = [
@@ -21,7 +21,7 @@ const DATA = [
   {
     id: 4,
     name: 'Limão',
-    size: '500ml',
+    size: '1500ml',
   },
   {
     id: 5,
@@ -30,37 +30,43 @@ const DATA = [
   },
   {
     id: 6,
-    name: 'Laranja',
-    size: '1L',
+    name: 'Graviola',
+    size: '100ml',
   },
   {
     id: 7,
-    name: 'Uva',
-    size: '700ml',
+    name: 'Acerola',
+    size: '1700ml',
   },
   {
     id: 8,
-    name: 'Abacaxi',
-    size: '200ml',
+    name: 'Melão',
+    size: '100ml',
   },
   {
     id: 9,
-    name: 'Limão',
-    size: '500ml',
+    name: 'Melancia',
+    size: '100ml',
   },
   {
     id: 10,
-    name: 'Groselha',
-    size: '2L',
+    name: 'Cajá',
+    size: '5L',
   },
 ];
 export default class Home extends React.Component {
+  goToDetail = (item) => {
+    this.props.navigation.navigate('Details', {screen: 'Details', item: item})
+  };
+
   renderItem = ({item}) => {
     console.log('Item: ', item);
     return (
       <View style={styles.listItem}>
-        <Text style={styles.listItemContentTitle}>{`Suco de ${item.name}`}</Text>
-        <Text style={styles.listItemContentSubtitle}>{`${item.size}`}</Text>
+        <TouchableOpacity onPress={() => this.goToDetail(item)}>
+          <Text style={styles.listItemContentTitle}>{`Suco de ${item.name}`}</Text>
+          <Text style={styles.listItemContentSubtitle}>{`${item.size}`}</Text>
+        </TouchableOpacity>
       </View>
     );
   };

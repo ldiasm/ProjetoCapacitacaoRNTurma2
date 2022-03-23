@@ -1,13 +1,31 @@
 import * as React from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 export default class MyButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      animationType: 'pulse',
+    };
+  }
+
+  animatedPress = () => {
+    this.setState({
+      animationType: 'shake',
+    })
+    const {screen, navigation} = this.props;5 
+    navigation.navigate(screen, {screen: screen});
+  };
+
   render() {
-    const {title, screen, navigation} = this.props;
+    const {title} = this.props;
     return (
-      <Pressable style={styles.mainTheme} onPress={() => navigation.navigate(screen, {screen: screen})}>
-        <Text style={styles.textButton}>{`${title}`}</Text>
-      </Pressable>
+      <Animatable.View animation={this.state.animationType}>
+        <Pressable style={styles.mainTheme} onPress={() => this.animatedPress()}>
+          <Text style={styles.textButton}>{`${title}`}</Text>
+        </Pressable>
+      </Animatable.View>
     );
   }
 }
