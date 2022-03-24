@@ -2,51 +2,53 @@ import * as React from 'react';
 import {Dimensions, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import MyButton from '../components/MyButton';
 
-const screenSizeHeight = Dimensions.get('window').height
-const screenSizeWidth = Dimensions.get('window').width
+const screenSizeHeight = Dimensions.get('window').height;
+const screenSizeWidth = Dimensions.get('window').width;
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      toggle: true,
       background: require('../assets/images/loginBackground.jpg'),
       title: 'Beijo no neném',
     };
   }
 
-  backgroundChange = () => {
+  backgroundChange = (toggle) => {
     this.setState({
-      background: require('../assets/images/ballonImage.jpg'),
-      title: 'Sentada com balões',
+      background: toggle ? require('../assets/images/ballonImage.jpg') : require('../assets/images/loginBackground.jpg'),
+      title: toggle ? 'Sentada com balões' : 'Beijo no neném',
+      toggle: !toggle
     });
     console.log('Pressionou!', this.state.title);
   };
 
   render() {
     return (
-      <View style={styles.mainView}>
-        <ImageBackground style={styles.imageBackground} source={this.state.background} resizeMode="cover">
+      <ImageBackground style={styles.imageBackground} source={this.state.background} resizeMode="cover">
+        <View style={styles.mainView}>
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>{`${this.state.title}`}</Text>
+            <Text style={styles.titleText} onPress={() => this.backgroundChange(this.state.toggle)}>{`${this.state.title}`}</Text>
           </View>
           <View style={styles.textInputView}>
             <TextInput style={styles.textInput} keyboardType="email-address" placeholder={'EMAIL'} />
             <TextInput style={styles.textInput} placeholder={'PASSWORD'} />
             <MyButton title="Login" screen="Home" navigation={this.props.navigation} />
           </View>
-        </ImageBackground>
-      </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
   mainView: {
-    height: '100%',
-    backgroundColor: 'black',
+    flex: 1,
+    padding: 32,
+    backgroundColor: 'rgba(120,80,14,0.6)',
   },
   imageBackground: {
     height: screenSizeHeight,
-    padding: 32,
   },
   titleView: {
     flex: 3,

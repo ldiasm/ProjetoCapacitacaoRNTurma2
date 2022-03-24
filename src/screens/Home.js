@@ -107,7 +107,7 @@ export default class Home extends React.Component {
       <View style={styles.listItem}>
         <TouchableOpacity onPress={() => this.goToDetail(item)}>
           <Text style={styles.listItemContentTitle}>{`${item.name}`}</Text>
-          <Text style={styles.listItemContentSubtitle}>{`${item.url}`}</Text>
+          <Text style={styles.listItemContentSubtitle}>{`${item.aliases}`}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -119,7 +119,7 @@ export default class Home extends React.Component {
         style={styles.imageBackground}
         source={{uri: 'https://cdn.pixabay.com/photo/2019/06/05/23/48/death-valley-4254871_960_720.jpg'}}>
         <View style={styles.mainView}>
-          <FlatList data={this.state.pokeData} renderItem={(item) => this.renderItem(item)} />
+          <FlatList data={this.state.gotData} renderItem={(item) => this.renderItem(item)} />
           <MyButton title="Login" screen="Login" navigation={this.props.navigation} />
         </View>
       </ImageBackground>
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     padding: 32,
+    backgroundColor: 'rgba(120,80,14,0.6)',
   },
   imageBackground: {
     height: '100%',
