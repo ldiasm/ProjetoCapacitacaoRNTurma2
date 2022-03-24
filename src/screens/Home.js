@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {FlatList, ImageBackground, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MyButton from '../components/MyButton';
+import gotApi from '../services/gotApi';
+import pokeApi from '../services/pokeApi';
 
 const DATA = [
   {
@@ -55,17 +57,57 @@ const DATA = [
   },
 ];
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedCharacter: {},
+      gotData: [],
+      pokeData: [],
+      randomNumber: Math.floor(Math.random() * 44),
+    };
+  }
+
+  componentDidMount = () => {
+    this.getData();
+    this.getPokemon();
+    console.log('RANDOM NUMBER: ', this.state.randomNumber);
+  };
+
   goToDetail = (item) => {
-    this.props.navigation.navigate('Details', {screen: 'Details', item: item})
+    this.props.navigation.navigate('Details', {screen: 'Details', item: item});
+  };
+
+  getData = () => {
+    const params = {
+      page: this.state.randomNumber,
+      pageSize: 50,
+    };
+    gotApi.get('/characters?page=' + params.page + '&pageSize=' + params.pageSize).then((result) => {
+      this.setState({
+        gotData: result.data,
+      });
+    });
+  };
+
+  getPokemon = () => {
+    const params = {
+      offset: 0,
+      limit: 50,
+    };
+    pokeApi.get('/pokemon?offset=' + params.offset + '&limit=' + params.limit).then((result) => {
+      this.setState({
+        pokeData: result.data.results,
+      });
+      console.log('POKEMONS RESULTS: ', result.data.results);
+    });
   };
 
   renderItem = ({item}) => {
-    console.log('Item: ', item);
     return (
       <View style={styles.listItem}>
         <TouchableOpacity onPress={() => this.goToDetail(item)}>
-          <Text style={styles.listItemContentTitle}>{`Suco de ${item.name}`}</Text>
-          <Text style={styles.listItemContentSubtitle}>{`${item.size}`}</Text>
+          <Text style={styles.listItemContentTitle}>{`${item.name}`}</Text>
+          <Text style={styles.listItemContentSubtitle}>{`${item.url}`}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -77,7 +119,7 @@ export default class Home extends React.Component {
         style={styles.imageBackground}
         source={{uri: 'https://cdn.pixabay.com/photo/2019/06/05/23/48/death-valley-4254871_960_720.jpg'}}>
         <View style={styles.mainView}>
-          <FlatList data={DATA} renderItem={(item) => this.renderItem(item)} />
+          <FlatList data={this.state.pokeData} renderItem={(item) => this.renderItem(item)} />
           <MyButton title="Login" screen="Login" navigation={this.props.navigation} />
         </View>
       </ImageBackground>
